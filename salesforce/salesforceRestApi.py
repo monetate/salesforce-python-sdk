@@ -75,8 +75,11 @@ class SalesforceRestAPI(SalesforceAPI):
             self.auth.instance_url,
             ResourcesName.get_resource_name("query"))
 
-        if url.startswith(query_url,
-                          len(self.auth.instance_url)):
+        query_key = url.split("/")[5]
+
+        if query_key != None:
+            get_url = '{0}{1}'.format(query_url, query_key)
+        elif url.startswith(query_url, len(self.auth.instance_url)):
             get_url = '{0}/{1}'.format(self.auth.instance_url, url)
         else:
             get_url = '{0}/{1}'.format(query_url, url)
